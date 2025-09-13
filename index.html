@@ -1,0 +1,153 @@
+<!doctype html>
+
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DrackPS — GTPS</title>
+  <meta name="description" content="DrackPS — private GTPS server. Elegant, minimal website for Drack GTPS with download links, server status, and ready for GitHub Pages." />
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0f172a; /* dark slate */
+      --green:#16a34a;
+      --glass: rgba(255,255,255,0.7);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg),#eef2ff);
+      color:var(--accent);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+    }
+    .container{width:100%;max-width:920px}
+    .card{background:var(--card);border-radius:14px;padding:28px;box-shadow:0 8px 30px rgba(12,15,30,0.08)}
+    header{display:flex;align-items:center;gap:18px}
+    .logo{width:72px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:linear-gradient(135deg,#eef2ff,#ffffff);font-weight:700;font-size:20px;color:var(--accent);box-shadow:inset 0 -6px 18px rgba(15,23,42,0.03)}
+    h1{margin:0;font-size:26px}
+    p.lead{margin:6px 0 0;color:var(--muted)}.status{display:flex;align-items:center;gap:12px;margin-top:20px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 0 6px rgba(22,163,74,0.12)}
+.status-text{font-weight:600}
+.meta{color:var(--muted);font-size:13px;margin-left:6px}
+
+.links{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);background:var(--glass);text-decoration:none;color:var(--accent);font-weight:600}
+.btn:active{transform:translateY(1px)}
+.code-block{background:#0b1220;color:#e6eef8;padding:14px;border-radius:8px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;font-size:13px}
+
+footer{margin-top:24px;color:var(--muted);font-size:13px}
+
+/* responsive */
+@media (min-width:720px){
+  .links{grid-template-columns:repeat(2,1fr)}
+}
+
+.copy-btn{background:#fff;border:1px solid rgba(15,23,42,0.06);padding:6px 10px;border-radius:8px;cursor:pointer}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <header>
+        <div class="logo">Drack<br>PS</div>
+        <div>
+          <h1>DrackPS</h1>
+          <p class="lead">DrackPS adalah private Growtopia Private Server (GTPS) yang dirancang untuk pengalaman bermain yang ringan dan dapat dikustom. Situs ini menyediakan file vhost, tautan PTUNNEL, dan instruksi untuk WINDOWS.</p>
+        </div>
+      </header><div class="status" aria-live="polite">
+    <div class="dot" id="status-dot"></div>
+    <div>
+      <div class="status-text" id="status-text">Server Status: Online</div>
+      <div class="meta" id="status-meta">Terakhir diperbarui: <span id="status-time"></span></div>
+    </div>
+  </div>
+
+  <section style="margin-top:18px">
+    <h3 style="margin:0 0 8px 0">Download / Links</h3>
+    <div class="links">
+      <a class="btn" href="https://www.mediafire.com/file/rkoaxspfb5e9knx/DrackPS.txt/file" target="_blank" rel="noopener">📁 Download vhost (DrackPS.txt)</a>
+
+      <a class="btn" href="https://growsoft.cc/android.txt" target="_blank" rel="noopener">📱 Copy PTUNNEL (ANDROID)</a>
+
+      <div style="padding:10px;border-radius:10px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid rgba(15,23,42,0.04)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:700">Copy WINDOWS</div>
+          <button class="copy-btn" id="copy-windows">Salin</button>
+        </div>
+        <pre class="code-block" id="windows-block">91.134.85.13 growtopia1.com
+
+91.134.85.13 growtopia2.com 91.134.85.13 www.growtopia1.com 91.134.85.13 www.growtopia2.com</pre> </div>
+
+</div>
+  </section>
+
+  <footer>
+    <div style="font-weight:600;margin-bottom:6px">Siap untuk GitHub</div>
+    <div>File ini siap diletakkan sebagai <code>index.html</code> di repo GitHub — aktifkan GitHub Pages pada branch <code>main</code> atau <code>gh-pages</code> untuk menerbitkan situs ini.</div>
+  </footer>
+</div>
+
+  </div>  <script>
+    // Tampilkan waktu Asia/Jakarta secara default (fallback ke lokal jika tidak didukung)
+    function formatJakarta(){
+      try{
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat('id-ID',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Jakarta'}).format(now);
+        return formatted;
+      }catch(e){
+        return new Date().toLocaleString();
+      }
+    }
+
+    document.getElementById('status-time').textContent = formatJakarta();
+
+    // Salin teks windows
+    document.getElementById('copy-windows').addEventListener('click', async function(){
+      const txt = document.getElementById('windows-block').textContent;
+      try{
+        await navigator.clipboard.writeText(txt);
+        this.textContent = 'Disalin!';
+        setTimeout(()=> this.textContent='Salin',1500);
+      }catch(e){
+        alert('Gagal menyalin. Silakan salin secara manual.');
+      }
+    });
+
+    // Server status stub (bisa diganti dengan fetch API ke endpoint status)
+    // Default: Online (green). Jika mau: ubah menjadi fetch('/status') dan sesuaikan.
+    (function(){
+      const dot = document.getElementById('status-dot');
+      const text = document.getElementById('status-text');
+      // contoh: bila ingin men-set offline, ubah nilai di bawah
+      const isOnline = true; // ubah menjadi false jika server down
+      if(isOnline){
+        dot.style.background = 'var(--green)';
+        text.textContent = 'Server Status: Online';
+      }else{
+        dot.style.background = '#ef4444';
+        text.textContent = 'Server Status: Offline';
+      }
+    })();
+  </script>  <!--
+    README / Petunjuk untuk GitHub
+
+    1) Buat repository baru di GitHub (misal: DrackPS-site)
+    2) Tambahkan file ini sebagai index.html pada root repo.
+    3) Commit & push ke branch main (atau gh-pages).
+    4) Di Settings -> Pages, pilih branch main (root) dan simpan. Situs akan tersedia di https://<username>.github.io/<repo>
+
+    Catatan:
+    - "Janggan tulisan nya rgb" dipenuhi: teks menggunakan warna tunggal, tidak ada teks RGB berkedip.
+    - Untuk mengganti status server agar dinamis, ganti bagian JS yang men-fetch endpoint status server Anda.
+  --></body>
+</html>
